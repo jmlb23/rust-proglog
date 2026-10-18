@@ -1,0 +1,16 @@
+load("@rules_rust//rust:defs.bzl", "rust_library")
+
+package(default_visibility = ["//visibility:public"])
+
+rust_library(
+    name = "server",
+    srcs = glob(["*.rs"]),
+    crate_root = "lib.rs",
+    deps = [
+        "@crates//axum",
+        "@crates//tokio",
+        "@crates//serde",
+        "@crates//serde_json",
+    ],
+    visibility = ["//src:__pkg__"],
+)
