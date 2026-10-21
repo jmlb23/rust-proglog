@@ -1,0 +1,16 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+package(default_visibility = ["//visibility:public"])
+
+rust_library(
+    name = "server",
+    srcs = glob(["*.rs"]),
+    crate_root = "lib.rs",
+    visibility = ["//src:__pkg__"],
+)
+
+rust_test(
+    name = "lib_test",
+    crate = ":server",
+    deps = [],
+)
