@@ -1,9 +1,11 @@
 use memmap2::{MmapMut, MmapOptions};
 use std::fs::{File, OpenOptions};
 use std::io::ErrorKind::UnexpectedEof;
-use std::io::{self, Error, Write};
+use std::io::{self, Error};
 use std::os::unix::fs::MetadataExt;
 use std::path::Path;
+
+use crate::config::Config;
 
 const OFF_WIDTH: u64 = 4;
 const POS_WIDTH: u64 = 8;
@@ -13,28 +15,6 @@ pub struct Index {
     file: Box<Path>,
     size: u64,
     mmap: MmapMut,
-}
-
-pub struct Segment {
-    max_store_bytes: u64,
-    max_index_bytes: u64,
-    initial_offset: u64,
-}
-
-pub struct Config {
-    segment: Segment,
-}
-
-impl Config {
-    pub fn new(seg: (u64, u64, u64)) -> Self {
-        Config {
-            segment: Segment {
-                max_store_bytes: seg.0,
-                max_index_bytes: seg.1,
-                initial_offset: seg.2,
-            },
-        }
-    }
 }
 
 impl Index {
@@ -62,7 +42,7 @@ impl Index {
         Ok(index)
     }
 
-    fn close(&self) -> io::Result<()> {
+    pub fn close(&self) -> io::Result<()> {
         self.mmap.flush()?;
         let file = Index::file_helper(&self.file)?;
         file.sync_all()?;
@@ -70,7 +50,7 @@ impl Index {
         Ok(())
     }
 
-    fn read(&self, n: i64) -> io::Result<(u32, u64)> {
+    pub fn read(&self, n: i64) -> io::Result<(u32, u64)> {
         if self.size == 0 {
             return Err(Error::from(UnexpectedEof));
         }
@@ -99,7 +79,7 @@ impl Index {
         Ok((out_endian, pos_endian))
     }
 
-    fn write(&mut self, off: u32, pos: u64) -> io::Result<()> {
+    pub fn write(&mut self, off: u32, pos: u64) -> io::Result<()> {
         if (self.mmap.len() as u64) < self.size + ENT_WIDTH {
             return Err(Error::from(UnexpectedEof));
         }
@@ -111,7 +91,7 @@ impl Index {
         Ok(())
     }
 
-    fn name(&self) -> io::Result<Option<&str>> {
+    pub fn name(&self) -> io::Result<Option<&str>> {
         Ok(self.file.to_str())
     }
 }
