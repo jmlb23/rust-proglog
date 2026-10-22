@@ -1,0 +1,3 @@
+build --shell_executable=/run/current-system/sw/bin/bash
+build --action_env=PATH
+build --host_action_env=PATH

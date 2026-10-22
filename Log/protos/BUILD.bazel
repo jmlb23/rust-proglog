@@ -1,0 +1,16 @@
+load("@protobuf//bazel:proto_library.bzl", "proto_library")
+load("@protobuf//rust:defs.bzl", "rust_proto_library")
+
+proto_library(
+    name = "log_proto",
+    srcs = ["log.proto"],
+)
+
+rust_proto_library(
+    name = "log_rust_proto",
+    deps = [":log_proto"],
+    visibility = ["//visibility:public"],
+)
+
+
+
