@@ -1,17 +1,14 @@
-use std::fs::OpenOptions;
+use std::{
+    fs::OpenOptions, io, path::{Path, PathBuf}
+};
 
-use server::log::MutexStore;
+use server::{
+    index::{self, Config},
+    log,
+};
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+fn main() -> io::Result<()> {
     let path = "/tmp/log.log";
-    let file = OpenOptions::new()
-        .read(true)
-        .append(true)
-        .open(path)
-        .and_then(|f| MutexStore::new(f))?;
 
-    let write_vec = vec![1, 2];
-
-    let write_res = file.append(write_vec.as_slice())?;
     Ok(())
 }

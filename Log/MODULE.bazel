@@ -7,28 +7,8 @@ rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
 crate = use_extension("@rules_rust//crate_universe:extensions.bzl", "crate")
 
 crate.spec(
-    package = "axum",
-    version = "0.8.9"
-)
-
-crate.spec(
-    package = "tokio",
-    version = "1.53.3",
-    features = [
-        "macros",
-        "rt-multi-thread",
-    ]
-)
-
-crate.spec(
-    package = "serde",
-    version = "1.0",
-    features = ["derive"]
-)
-
-crate.spec(
-    package = "serde_json",
-    version = "1.0",
+    package = "memmap2",
+    version = "0.9.12"
 )
 
 crate.from_specs()
