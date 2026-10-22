@@ -13,7 +13,7 @@ pub struct MutexStore {
 impl MutexStore {
     pub fn new(file: File) -> io::Result<MutexStore> {
         Ok(MutexStore {
-            mu: Mutex::new(Store { file: file }),
+            mu: Mutex::new(Store { file }),
         })
     }
 
