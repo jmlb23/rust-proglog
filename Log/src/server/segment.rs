@@ -8,11 +8,7 @@ use std::{
 
 use log_rust_proto::protos_log_proto;
 
-use crate::{
-    config::Config,
-    index::{self, Index},
-    log::{self, MutexStore},
-};
+use crate::{config::Config, index::Index, log::MutexStore};
 
 struct Segment {
     store: MutexStore,
@@ -55,7 +51,5 @@ impl Segment {
         })
     }
 
-    pub fn append(&self, rec: protos_log_proto::Record) {
-
-    }
+    pub fn append(&self, rec: protos_log_proto::Record) {}
 }
